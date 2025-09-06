@@ -3,12 +3,12 @@ import { PiChurchLight } from "react-icons/pi";
 import { GrGroup } from "react-icons/gr";
 import { BsMic } from "react-icons/bs";
 import { HiOutlineViewGrid } from "react-icons/hi";
-// import {Link} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 export default function Header(){
     return(
         <>
-        <header className="w-full bg-white drop-shadow-sm scro flex ">
+        <header className="w-full bg-white border-b-1 shadow-lg border-gray-200 scro flex ">
         <div className="navbar text-gray-800 shadow-sm">
         <div className="navbar-start">
             <div className="dropdown">
@@ -22,13 +22,18 @@ export default function Header(){
                 <li><a>Item 3</a></li>
             </ul>
             </div>
-            <a className="btn btn-ghost text-xl"><img src="/christful_logo.png" alt="" width='80px' /></a>
+            <a className="btn btn-ghost text-xl">
+                <div className="flex items-center">
+                    <img src="/christful_logo.png" alt="" width='80px' />
+                    <p className="text-[#800000] font-bold font-mono">Christful</p>
+                </div>
+            </a>
         </div>
         <div className="navbar-center hidden lg:flex">
-            <ul className="menu menu-horizontal px-1">
-            <li><a><PiChurchLight className="text-4xl text-[#800000]" /></a></li>
-            <li className="mx-30"><a><GrGroup className="text-3xl text-gray-500" /></a></li>
-            <li><a><BsMic className="text-3xl text-gray-500" /></a></li>
+            <ul className="menu menu-horizontal px-1 ">
+            <li><Link to='/home'><PiChurchLight className="text-5xl  text-gray-600 p-2 bg-gray-50 rounded-full"  /></Link></li>
+            <li className="mx-30"><Link to='/groups'><GrGroup className="text-5xl  text-gray-600 p-2 bg-gray-50 rounded-full " /></Link></li>
+            <li><a><BsMic className="text-5xl  text-gray-600 p-2 bg-gray-50 rounded-full " /></a></li>
             </ul>
         </div>
         <div className="navbar-end">

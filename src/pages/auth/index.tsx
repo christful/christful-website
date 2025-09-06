@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { Link } from "react-router-dom";
+import Register from "../../components/form/Register";
+
+
 
 export default function Signup() {
   const [showPassword, setShowPassword] = useState(false);
@@ -15,21 +18,21 @@ export default function Signup() {
       <img src="/christful_logo.png" alt="Christful Logo" className="w-32 mb-6 absolute" />
 
       {/* Left Side Text */}
-      <div className="flex-1 hidden lg:flex flex-col justify-center px-[200px] text-white bg-white/70 lg:bg-transparent">
+      <div className="flex-1 hidden lg:flex flex-col justify-center px-[200px] text-gray-800 bg-white/70 lg:bg-transparent">
         {slide === 1 ? (
           <>
-            <h1 className="font-bold text-7xl mb-4 mt-40">Welcome back!</h1>
-            <p className="italic text-3xl mb-6">“The Lord is your keeper.” ~ Psalm 121:5</p>
+            <h1 className="font-bold text-7xl mb-4 mt-40 text-[#800000]">Welcome to Christful</h1>
+            <p className="italic text-3xl mb-6">“Be still, and know that I am God.” ~ Psalm 46:10</p>
             <p className="mb-6 text-lg leading-relaxed">
-              We’re glad you’re here again.<br />
-              Every step you take closer to Christ draws you deeper into peace, purpose,
-              and His unfailing love.<br />
-              Keep seeking, He is always near.
+              This is your space to pause, pray, and grow in Christ. 
+              <br /> May His Word guide you, His Spirit fill you, and His love
+              <br /> sustain you every day.
+
             </p>
           </>
         ) : (
           <>
-            <h1 className="font-bold text-6xl mb-4 mt-40">You're almost there!</h1>
+            <h1 className="font-bold text-6xl mb-4 mt-40 text-[#800000]">You're almost there!</h1>
             <p className="italic text-3xl mb-6">“I will never leave you nor forsake you.” ~ Hebrews 13:5</p>
             <p className="mb-6 text-lg leading-relaxed">
             You are one step closer in building a solid relationship with christ.
@@ -42,14 +45,14 @@ export default function Signup() {
       </div>
 
       {/* Right Side Form */}
-      <div className="flex-1 flex items-center justify-center px-6 py-10">
+      <Register />
+
+      {/* <div className="flex-1 flex items-center justify-center px-6 py-10">
         <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg">
           <h2 className="text-gray-800 text-2xl font-medium">Join Christful today!</h2>
           <p className="text-gray-800 text-lg mb-6">Create an account</p>
 
-          {/* Carousel */}
           <div className="carousel w-full">
-            {/* Slide 1 */}
             <div id="item1" className="carousel-item w-full">
               <div>
                 <input
@@ -73,17 +76,15 @@ export default function Signup() {
                     document.getElementById("item2").scrollIntoView({ behavior: "smooth" });
                     setSlide(2);
                   }}
-                  className="w-full bg-red-900 text-white mb-4 font-semibold py-3 rounded-lg hover:bg-red-800 transition"
+                  className="w-full bg-red-900 text-gray-800 mb-4 font-semibold py-3 rounded-lg hover:bg-red-800 transition"
                 >
                   Next
                 </button>
               </div>
             </div>
 
-            {/* Slide 2 */}
             <div id="item2" className="carousel-item w-full">
               <div className="w-full">
-                {/* Password */}
                 <div className="relative mb-4">
                   <input
                     type={showPassword ? "text" : "password"}
@@ -99,7 +100,6 @@ export default function Signup() {
                   </button>
                 </div>
 
-                {/* Confirm Password */}
                 <div className="relative mb-4">
                   <input
                     type={showPassword ? "text" : "password"}
@@ -120,7 +120,7 @@ export default function Signup() {
                     document.getElementById("item1").scrollIntoView({ behavior: "smooth" });
                     setSlide(1);
                   }}
-                  className="w-full bg-red-900 text-white mb-4 font-semibold py-3 rounded-lg hover:bg-red-800 transition"
+                  className="w-full bg-red-900 text-gray-800 mb-4 font-semibold py-3 rounded-lg hover:bg-red-800 transition"
                 >
                   Sign Up
                 </button>
@@ -128,7 +128,6 @@ export default function Signup() {
             </div>
           </div>
 
-          {/* Indicator Dots */}
           <div className="flex w-full justify-center gap-2 py-5">
             <div
               onClick={() => {
@@ -150,14 +149,13 @@ export default function Signup() {
             ></div>
           </div>
 
-          {/* Already have an account */}
           <div className="text-center">
             <Link to="/" className="text-center text-blue-600 hover:underline">
               Already have an account? Log in
             </Link>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

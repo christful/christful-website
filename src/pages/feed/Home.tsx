@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
-import { Plus } from 'lucide-react';
 import Header from '../../components/Header';
 import SideNav from '../../components/SideNav';
+import GroupChat from '../../components/GroupChat';
 import Post from '../../components/Post';
 import AudioPost from '../../components/AudioPost';
 
@@ -14,7 +14,7 @@ export default function MainLayout() {
       {/* Main layout: sidebar - post - right panel */}
       <div className="flex flex-1 overflow-hidden">
         {/* Left Sidebar */}
-        <div className="w-1/5 bg-white border-r">
+        <div className="w-1/4 bg-white border-r">
           <SideNav />
         </div>
 
@@ -28,15 +28,8 @@ export default function MainLayout() {
         </div>
 
         {/* Right Sidebar */}
-        <div className="w-1/4 border-l bg-white p-6">
-          <h1 className="text-gray-800 font-bold text-2xl mb-4">Group Chat</h1>
-          <Link
-            to=""
-            className="flex items-center gap-2 py-3 rounded-lg hover:text-white text-[#800000] transition"
-          >
-            <Plus className="text-gray-800 bg-gray-200 p-2 rounded-full" size={30} />
-            <p className="text-gray-800">Create group chat</p>
-          </Link>
+        <div className="w-1/4 border-l bg-white ">
+         <GroupChat />
         </div>
       </div>
     </div>
