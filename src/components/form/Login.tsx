@@ -4,7 +4,7 @@ import type { ChangeEvent } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { loginUser } from "../../api/authApi";
-
+import { GoogleLogin } from "@react-oauth/google";
 function Login() {
   const [formData, setFormData] = useState({
     email: "",
@@ -20,6 +20,12 @@ function Login() {
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleGoogleSuccess = (credentialResponse: any) => {
+    console.log("Google Login Success:", credentialResponse);
+    // Handle your Google login logic here
+    // You can send the token to your backend
   };
 
   const handleLogin = async () => {
@@ -110,19 +116,23 @@ function Login() {
         {success && <p className="mt-3 text-green-600">{success}</p>}
 
         <div className="flex items-center my-6">
-            <div className="flex-grow h-px bg-gray-300"></div>
-            <span className="px-3 text-gray-500 text-sm">OR</span>
-            <div className="flex-grow h-px bg-gray-300"></div>
-          </div>
+          <div className="flex-grow h-px bg-gray-300"></div>
+          <span className="px-3 text-gray-500 text-sm">OR</span>
+          <div className="flex-grow h-px bg-gray-300"></div>
+        </div>
 
-          <button className="w-full flex items-center justify-center mb-4 gap-2 bg-white text-gray-700 font-medium py-3 rounded-lg shadow hover:bg-gray-100 transition">
-            <img src="/icon/google_logo.png" alt="Google" className="w-5 h-5" />
-            Continue with Google
-          </button>
-          <button className="w-full flex items-center justify-center mb-4 gap-2 bg-white text-gray-700 font-medium py-3 rounded-lg shadow hover:bg-gray-100 transition">
-            <img src="/icon/facebook_logo.webp" alt="Facebook" className="w-5 h-5" />
-            Continue with Facebook
-          </button>
+        {/* Google Login */}
+        <div className="w-full mb-4">
+          <GoogleLogin
+            onSuccess={handleGoogleSuccess}
+            onError={() => console.error("Google login failed")}
+          />
+        </div>
+
+        <button className="w-full flex items-center justify-center mb-4 gap-2 bg-white text-gray-700 font-medium py-3 rounded-lg shadow hover:bg-gray-100 transition">
+          <img src="/icon/facebook_logo.webp" alt="Facebook" className="w-5 h-5" />
+          Continue with Facebook
+        </button>
 
         {/* Sign up prompt */}
         <div className="text-center mt-6">
