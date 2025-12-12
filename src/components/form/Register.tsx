@@ -96,7 +96,7 @@ function Register() {
 
               <button
                 onClick={() => {
-                  document.getElementById("item2").scrollIntoView({ behavior: "smooth" });
+                  document.getElementById("item2")?.scrollIntoView({ behavior: "smooth" });
                   setSlide(2);
                 }}
                 className="w-full bg-red-900 text-white mb-4 font-semibold py-3 rounded-lg hover:bg-red-800 transition"
@@ -165,7 +165,7 @@ function Register() {
         <div className="flex w-full justify-center gap-2 py-5">
           <div
             onClick={() => {
-              document.getElementById("item1").scrollIntoView({ behavior: "smooth" });
+              document.getElementById("item1")?.scrollIntoView({ behavior: "smooth" });
               setSlide(1);
             }}
             className={`w-[10px] h-[10px] cursor-pointer rounded-full transition ${
@@ -174,7 +174,7 @@ function Register() {
           ></div>
           <div
             onClick={() => {
-              document.getElementById("item2").scrollIntoView({ behavior: "smooth" });
+              document.getElementById("item2")?.scrollIntoView({ behavior: "smooth" });
               setSlide(2);
             }}
             className={`w-[10px] h-[10px] cursor-pointer rounded-full transition ${
