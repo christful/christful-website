@@ -1,13 +1,13 @@
-import { useState } from 'react';
+import { useState, ChangeEvent } from 'react';
 import { Link } from 'react-router-dom'; // if you're using React Router
 import { Plus, Search } from 'lucide-react'; // make sure this icon package is installed
 
 export default function GroupChat() {
   const [createGroupModal, setCreateGroupModal] = useState(false);
-  const [preview, setPreview] = useState(null);
+  const [preview, setPreview] = useState<string | null>(null);
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
+  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
     if (file) {
       setPreview(URL.createObjectURL(file));
     }

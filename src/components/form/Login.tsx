@@ -1,5 +1,5 @@
 // src/pages/auth/Login.tsx
-import { useState } from "react";
+import { useState, ChangeEvent } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { loginUser } from "../../api/authApi";
@@ -17,7 +17,7 @@ function Login() {
 
   const navigate = useNavigate();
 
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
@@ -46,8 +46,9 @@ function Login() {
       setTimeout(() => {
         navigate("/home"); // or home page
       }, 1500);
-    } catch (err) {
-      setError(err.response?.data?.message || err.message || "Login failed. Please try again.");
+    } catch (err: any) {
+      const error = err as any;
+      setError(error?.response?.data?.message || error?.message || "Login failed. Please try again.");
     } finally {
       setLoading(false);
     }
