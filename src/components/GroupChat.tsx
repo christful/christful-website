@@ -1,4 +1,5 @@
-import { useState, ChangeEvent } from 'react';
+import { useState } from 'react';
+import type { ChangeEvent } from 'react';
 import { Link } from 'react-router-dom'; // if you're using React Router
 import { Plus, Search } from 'lucide-react'; // make sure this icon package is installed
 
