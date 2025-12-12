@@ -4,7 +4,7 @@ import type { ChangeEvent } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { loginUser } from "../../api/authApi";
-import { useGoogleLogin } from "@react-oauth/google";
+import { GoogleLogin } from "@react-oauth/google";
 function Login() {
   const [formData, setFormData] = useState({
     email: "",
@@ -22,48 +22,17 @@ function Login() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const googleLogin = useGoogleLogin({
-    onSuccess: (tokenResponse) => {
-      console.log("Google token:", tokenResponse);
-      // send tokenResponse.access_token to your backend
-    },
-    onError: () => console.error("Google login failed"),
-  });
-
-
-  const handleLogin = async () => {
-    if (!formData.email || !formData.password) {
-      setError("Please fill in all fields.");
-      return;
-    }
-
-    setLoading(true);
-    setError("");
-    setSuccess("");
-
-    try {
-      const data = await loginUser({
-        email: formData.email,
-        password: formData.password,
-      });
-
-      setSuccess("Login successful!");
-      console.log("Login Response:", data);
-
-      // Optionally store token, then redirect
-      if (data?.token) localStorage.setItem("token", data.token);
-
-      setTimeout(() => {
-        navigate("/home"); // or home page
-      }, 1500);
-    } catch (err: any) {
-      const error = err as any;
-      setError(error?.response?.data?.message || error?.message || "Login failed. Please try again.");
-    } finally {
-      setLoading(false);
-    }
+  const handleGoogleSuccess = (credentialResponse: any) => {
+    console.log("Google Login Success:", credentialResponse);
+    localStorage.setItem("token", credentialResponse.token);
   };
 
+ const handleLogin = () => {
+    setLoading(true);
+    setError("");
+    setSuccess(""); 
+    loginUser(formData, setError, setSuccess, setLoading, navigate);
+ }
   return (
     <div className="flex-1 flex items-center justify-center px-6 py-10">
       <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg">
@@ -124,13 +93,14 @@ function Login() {
           <div className="flex-grow h-px bg-gray-300"></div>
         </div>
 
-        <button
-          onClick={() => googleLogin()}
-          className="w-full flex items-center justify-center mb-4 gap-2 bg-white text-gray-700 font-medium py-3 rounded-lg shadow hover:bg-gray-100 transition"
-        >
-          <img src="/icon/google_logo.png" alt="Google" className="w-5 h-5" />
-          Continue with Google
-        </button>
+        <div >
+          <GoogleLogin
+            onSuccess={handleGoogleSuccess}
+            onError={() => console.error("Google login failed")}
+            ux_mode="popup"
+            logo_alignment="center"
+          />
+        </div>
 
         <button className="w-full flex items-center justify-center mb-4 gap-2 bg-white text-gray-700 font-medium py-3 rounded-lg shadow hover:bg-gray-100 transition">
           <img src="/icon/facebook_logo.webp" alt="Facebook" className="w-5 h-5" />
