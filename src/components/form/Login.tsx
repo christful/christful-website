@@ -4,7 +4,7 @@ import type { ChangeEvent } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { loginUser } from "../../api/authApi";
-import { GoogleLogin } from "@react-oauth/google";
+import { useGoogleLogin } from "@react-oauth/google";
 function Login() {
   const [formData, setFormData] = useState({
     email: "",
@@ -22,11 +22,14 @@ function Login() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleGoogleSuccess = (credentialResponse: any) => {
-    console.log("Google Login Success:", credentialResponse);
-    // Handle your Google login logic here
-    // You can send the token to your backend
-  };
+  const googleLogin = useGoogleLogin({
+    onSuccess: (tokenResponse) => {
+      console.log("Google token:", tokenResponse);
+      // send tokenResponse.access_token to your backend
+    },
+    onError: () => console.error("Google login failed"),
+  });
+
 
   const handleLogin = async () => {
     if (!formData.email || !formData.password) {
@@ -121,13 +124,13 @@ function Login() {
           <div className="flex-grow h-px bg-gray-300"></div>
         </div>
 
-        {/* Google Login */}
-        <div className="w-full mb-4">
-          <GoogleLogin
-            onSuccess={handleGoogleSuccess}
-            onError={() => console.error("Google login failed")}
-          />
-        </div>
+        <button
+          onClick={() => googleLogin()}
+          className="w-full flex items-center justify-center mb-4 gap-2 bg-white text-gray-700 font-medium py-3 rounded-lg shadow hover:bg-gray-100 transition"
+        >
+          <img src="/icon/google_logo.png" alt="Google" className="w-5 h-5" />
+          Continue with Google
+        </button>
 
         <button className="w-full flex items-center justify-center mb-4 gap-2 bg-white text-gray-700 font-medium py-3 rounded-lg shadow hover:bg-gray-100 transition">
           <img src="/icon/facebook_logo.webp" alt="Facebook" className="w-5 h-5" />
