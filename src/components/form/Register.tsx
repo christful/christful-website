@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+import { registerUser } from "../../api/authApi";
 
 function Register() {
   const [formData, setFormData] = useState({
@@ -36,7 +36,7 @@ function Register() {
     setSuccess("");
 
     try {
-      const res = await axios.post("https://christful-server.vercel.app/register", {
+      const data = await registerUser({
         firstName: formData.firstName,
         lastName: formData.lastName,
         email: formData.email,
@@ -44,14 +44,15 @@ function Register() {
       });
 
       setSuccess("Account created successfully!");
-      console.log("Response:", res.data);
+      console.log("Response:", data);
 
       // redirect to login page after success
       setTimeout(() => {
         navigate("/login");
       }, 1500);
     } catch (err) {
-      setError(err.response?.data?.message || "Registration failed");
+      const error = err as any;
+      setError(error?.response?.data?.message || error?.message || "Registration failed");
     } finally {
       setLoading(false);
     }
@@ -60,7 +61,7 @@ function Register() {
   return (
     <div className="flex-1 flex items-center justify-center px-6 py-10">
       <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg">
-        <h2 className="text-gray-800 text-2xl font-medium">Join Christful today!</h2>
+        <h2 className="text-gray-800 text-2xl font-semibold">Join Christful today!</h2>
         <p className="text-gray-800 text-lg mb-6">Create an account</p>
 
         {/* Carousel */}
@@ -98,7 +99,7 @@ function Register() {
                   document.getElementById("item2").scrollIntoView({ behavior: "smooth" });
                   setSlide(2);
                 }}
-                className="w-full bg-red-900 text-gray-800 mb-4 font-semibold py-3 rounded-lg hover:bg-red-800 transition"
+                className="w-full bg-red-900 text-white mb-4 font-semibold py-3 rounded-lg hover:bg-red-800 transition"
               >
                 Next
               </button>
@@ -149,7 +150,7 @@ function Register() {
               <button
                 onClick={handleRegister}
                 disabled={loading}
-                className="w-full bg-red-900 text-gray-800 mb-4 font-semibold py-3 rounded-lg hover:bg-red-800 transition"
+                className="w-full bg-red-900 text-white mb-4 font-semibold py-3 rounded-lg hover:bg-red-800 transition"
               >
                 {loading ? "Signing Up..." : "Sign Up"}
               </button>

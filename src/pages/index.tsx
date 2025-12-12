@@ -68,20 +68,7 @@ export default function Index() {
 
           {/* <p className="text-center text-sm text-gray-500 mt-4">Forgotten Password?</p> */}
 
-          {/* <div className="flex items-center my-6">
-            <div className="flex-grow h-px bg-gray-300"></div>
-            <span className="px-3 text-gray-500 text-sm">OR</span>
-            <div className="flex-grow h-px bg-gray-300"></div>
-          </div>
-
-          <button className="w-full flex items-center justify-center mb-4 gap-2 bg-white text-gray-700 font-medium py-3 rounded-lg shadow hover:bg-gray-100 transition">
-            <img src="/icon/google_logo.png" alt="Google" className="w-5 h-5" />
-            Continue with Google
-          </button>
-          <button className="w-full flex items-center justify-center mb-4 gap-2 bg-white text-gray-700 font-medium py-3 rounded-lg shadow hover:bg-gray-100 transition">
-            <img src="/icon/facebook_logo.webp" alt="Facebook" className="w-5 h-5" />
-            Continue with Facebook
-          </button> */}
+          
           
           {/* <div className="text-center">
           <Link to='/signup' className="text-center">No account? Join Christful today</Link>

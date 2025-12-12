@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+import { loginUser } from "../../api/authApi";
 
 function Login() {
   const [formData, setFormData] = useState({
@@ -32,22 +32,22 @@ function Login() {
     setSuccess("");
 
     try {
-      const res = await axios.post("https://christful-server.vercel.app/login", {
+      const data = await loginUser({
         email: formData.email,
         password: formData.password,
       });
 
       setSuccess("Login successful!");
-      console.log("Login Response:", res.data);
+      console.log("Login Response:", data);
 
       // Optionally store token, then redirect
-      localStorage.setItem("token", res.data.token);
+      if (data?.token) localStorage.setItem("token", data.token);
 
       setTimeout(() => {
         navigate("/home"); // or home page
       }, 1500);
     } catch (err) {
-      setError(err.response?.data?.message || "Login failed. Please try again.");
+      setError(err.response?.data?.message || err.message || "Login failed. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -107,8 +107,20 @@ function Login() {
         {error && <p className="mt-3 text-red-500">{error}</p>}
         {success && <p className="mt-3 text-green-600">{success}</p>}
 
-        {/* Divider */}
-        {/* Optional Social Login UI Here */}
+        <div className="flex items-center my-6">
+            <div className="flex-grow h-px bg-gray-300"></div>
+            <span className="px-3 text-gray-500 text-sm">OR</span>
+            <div className="flex-grow h-px bg-gray-300"></div>
+          </div>
+
+          <button className="w-full flex items-center justify-center mb-4 gap-2 bg-white text-gray-700 font-medium py-3 rounded-lg shadow hover:bg-gray-100 transition">
+            <img src="/icon/google_logo.png" alt="Google" className="w-5 h-5" />
+            Continue with Google
+          </button>
+          <button className="w-full flex items-center justify-center mb-4 gap-2 bg-white text-gray-700 font-medium py-3 rounded-lg shadow hover:bg-gray-100 transition">
+            <img src="/icon/facebook_logo.webp" alt="Facebook" className="w-5 h-5" />
+            Continue with Facebook
+          </button>
 
         {/* Sign up prompt */}
         <div className="text-center mt-6">
