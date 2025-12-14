@@ -8,8 +8,35 @@ export const registerUser = async (userData) => {
   return response.data;
 };
 
-export const loginUser = async (credentials) => {
-  const response = await axios.post(`${API_URL}/login`, credentials);
-  localStorage.setItem("token", response.data.token);
-  return response.data;
-}
+export const loginUser = async (formData, setError, setSuccess, setLoading, navigate) => {
+    if (!formData.email || !formData.password) {
+      setError("Please fill in all fields.");
+      return;
+    }
+
+    setLoading(true);
+    setError("");
+    setSuccess("");
+
+    try {
+      const data = await axios.post(`${API_URL}/login`, {
+        email: formData.email,
+        password: formData.password,
+      });
+
+      setSuccess("Login successful!");
+      console.log("Login Response:", data);
+
+      // Optionally store token, then redirect
+      if (data?.token) localStorage.setItem("token", data.token);
+
+      setTimeout(() => {
+        navigate("/home");
+      }, 1500);
+    } catch (err) {
+      const error = err;
+      setError(error?.response?.data?.message || error?.message || "Login failed. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
