@@ -82,7 +82,6 @@ function Login() {
           {loading ? "Logging in..." : "Log in"}
         </button>
 
-        {/* Feedback */}
         {error && <p className="mt-3 text-red-500">{error}</p>}
         {success && <p className="mt-3 text-green-600">{success}</p>}
 
@@ -92,7 +91,6 @@ function Login() {
           <div className="flex-grow h-px bg-gray-300"></div>
         </div>
 
-        <div >
           <button
             onClick={googleLogin(handleGoogleSuccess)}
             className="w-full flex items-center justify-center mb-4 gap-2 bg-white text-gray-700 font-medium py-3 rounded-lg shadow hover:bg-gray-100 transition"
@@ -100,7 +98,6 @@ function Login() {
             <img src="/icon/google_logo.png" alt="Google" className="w-5 h-5" />
             Continue with Google
           </button>
-        </div>
 
         <button className="w-full flex items-center justify-center mb-4 gap-2 bg-white text-gray-700 font-medium py-3 rounded-lg shadow hover:bg-gray-100 transition">
           <img src="/icon/facebook_logo.webp" alt="Facebook" className="w-5 h-5" />
