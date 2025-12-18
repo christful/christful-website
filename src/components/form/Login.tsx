@@ -3,7 +3,10 @@ import { useState } from "react";
 import type { ChangeEvent } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
-import { loginUser, googleLogin } from "../../api/authApi";
+import { loginUser,  } from "../../api/authApi";
+import { useGoogleLogin } from "@react-oauth/google";
+import axios from "axios";
+
 function Login() {
   const [formData, setFormData] = useState({
     email: "",
@@ -21,17 +24,30 @@ function Login() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleGoogleSuccess = (credentialResponse: any) => {
-    console.log("Google Login Success:", credentialResponse);
-    localStorage.setItem("token", credentialResponse.token);
-  };
-
  const handleLogin = () => {
     setLoading(true);
     setError("");
     setSuccess(""); 
     loginUser(formData, setError, setSuccess, setLoading, navigate);
  }
+
+ const loginWithGoogle = useGoogleLogin({
+  onSuccess: async (tokenResponse) => {
+    try {
+      const res = await axios.post("https://christful-backend.vercel.app/googleOAuth", {
+        token: tokenResponse.access_token,
+      });
+      if (res.data?.token) localStorage.setItem("token", res.data.token);
+      navigate("/home");
+    } catch (err) {
+      console.error("Google login failed:", err);
+    }
+  },
+  onError: (error) => {
+    console.error("Google login error:", error);
+  },
+});
+
   return (
     <div className="flex-1 flex items-center justify-center px-6 py-10">
       <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg">
@@ -92,7 +108,7 @@ function Login() {
         </div>
 
           <button
-            onClick={googleLogin(handleGoogleSuccess)}
+            onClick={() => loginWithGoogle()}
             className="w-full flex items-center justify-center mb-4 gap-2 bg-white text-gray-700 font-medium py-3 rounded-lg shadow hover:bg-gray-100 transition"
           >
             <img src="/icon/google_logo.png" alt="Google" className="w-5 h-5" />
