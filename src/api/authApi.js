@@ -1,6 +1,6 @@
 // api/authApi.js
 import axios from "axios";
-
+import { useGoogleLogin } from "@react-oauth/google";
 const API_URL = "https://christful-backend.vercel.app"; // replace with your backend URL
 
 export const registerUser = async (userData) => {
@@ -40,3 +40,26 @@ export const loginUser = async (formData, setError, setSuccess, setLoading, navi
       setLoading(false);
     }
   };
+
+ export const googleLogin = () => {
+    return useGoogleLogin({
+      onSuccess: async (tokenResponse) => {
+        try {
+          const res = await axios.post(`${API_URL}/googleOAuth`, {
+            token: tokenResponse.access_token,
+          });
+
+          console.log("Google Login Response:", res.data);
+
+          // Optionally store token and redirect
+          if (res.data?.token) localStorage.setItem("token", res.data.token);
+          window.location.href = "/home";
+        } catch (err) {
+          console.error("Google login failed:", err);
+        }
+      },
+      onError: (error) => {
+        console.error("Google login error:", error);
+      },
+    });
+ }

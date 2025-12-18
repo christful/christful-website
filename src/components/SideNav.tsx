@@ -1,9 +1,13 @@
 import { BookOpen, Video, Mic, File } from 'lucide-react';
 import {Link} from 'react-router-dom';
+import React from 'react';
+import { Eye, UserRound } from "lucide-react";
 
+interface SideNavProps {
+  fetchedProfile?: Record<string, any>;
+}
 
-
-export default function SideNav(){
+export default function SideNav({ fetchedProfile }: SideNavProps){
     return(
         <>
           <div className="container p-10">
@@ -13,14 +17,23 @@ export default function SideNav(){
                 {/* <div className="w-12 h-12 rounded-full bg-neutral text-neutral-content flex items-center justify-center font-semibold">
                     <span>IB</span>
                 </div> */}
-                    <img
-                    src="https://randomuser.me/api/portraits/men/31.jpg"
-                    alt="Profile"
-                    className="w-12 h-12 rounded-full mr-3"
-                    />
+                {
+                    fetchedProfile?.profilePicture? (
+                        <img
+                        src={ fetchedProfile.profilePicture }
+                        alt="Profile"
+                        className="w-12 h-12 rounded-full mr-3"
+                        />
+
+                    ) : (
+                        <div className="w-12 h-12 rounded-full bg-red-800 text-neutral-content flex items-center justify-center font-semibold">
+                        <UserRound />
+                        </div>
+                    )
+                }
 
                 {/* Name */}
-                <p className="text-gray-800 font-medium">Ibeh Promise</p>
+                <p className="text-gray-800 font-medium">{fetchedProfile?.firstName} {fetchedProfile?.lastName}</p>
                 </div>
             </Link>
                 
@@ -31,7 +44,7 @@ export default function SideNav(){
                 >
 
                     <BookOpen className='text-gray-800' size={18} />
-                        <p className='text-gray-800'>All Sermons</p>
+                        <p className='text-white'>All Sermons</p>
 
                 </Link>
 
@@ -41,7 +54,7 @@ export default function SideNav(){
                 >
 
                     <Video className='text-gray-800' size={18} />
-                        <p className='text-gray-800'>Video</p>
+                        <p className='text-gray-800 hover:text-white'>Video</p>
 
                 </Link>
 
@@ -51,7 +64,7 @@ export default function SideNav(){
                 >
 
                     <Mic className='text-gray-800' size={18} />
-                        <p className='text-gray-800'>Audio</p>
+                        <p className='text-gray-800 hover:text-white'>Audio</p>
 
                 </Link>
                 <Link
@@ -60,7 +73,7 @@ export default function SideNav(){
                 >
 
                     <File className='text-gray-800' size={18} />
-                        <p className='text-gray-800'>Manuscript</p>
+                        <p className='text-gray-800 hover:text-white'>Manuscript</p>
 
                 </Link>
                 </div>

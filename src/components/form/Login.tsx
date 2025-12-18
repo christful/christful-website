@@ -3,8 +3,7 @@ import { useState } from "react";
 import type { ChangeEvent } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
-import { loginUser } from "../../api/authApi";
-import { GoogleLogin } from "@react-oauth/google";
+import { loginUser, googleLogin } from "../../api/authApi";
 function Login() {
   const [formData, setFormData] = useState({
     email: "",
@@ -94,12 +93,13 @@ function Login() {
         </div>
 
         <div >
-          <GoogleLogin
-            onSuccess={handleGoogleSuccess}
-            onError={() => console.error("Google login failed")}
-            ux_mode="popup"
-            logo_alignment="center"
-          />
+          <button
+            onClick={googleLogin(handleGoogleSuccess)}
+            className="w-full flex items-center justify-center mb-4 gap-2 bg-white text-gray-700 font-medium py-3 rounded-lg shadow hover:bg-gray-100 transition"
+          >
+            <img src="/icon/google_logo.png" alt="Google" className="w-5 h-5" />
+            Continue with Google
+          </button>
         </div>
 
         <button className="w-full flex items-center justify-center mb-4 gap-2 bg-white text-gray-700 font-medium py-3 rounded-lg shadow hover:bg-gray-100 transition">
