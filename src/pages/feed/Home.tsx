@@ -4,8 +4,25 @@ import SideNav from '../../components/SideNav';
 import GroupChat from '../../components/GroupChat';
 import Post from '../../components/Post';
 import AudioPost from '../../components/AudioPost';
+import { useEffect, useState } from 'react';
+import { fetchUserProfile } from '../../api/userApi';
 
 export default function MainLayout() {
+  const [fetchedProfile, setFetchedProfile] = useState({});
+
+  useEffect(() => {
+    const loadUserProfile = async () => {
+      try {
+        const profile = await fetchUserProfile();
+        setFetchedProfile(profile);
+        console.log('User Profile:', profile);
+      } catch (error) {
+        console.error('Error fetching user profile:', error);
+      }
+    };
+
+    loadUserProfile();
+  }, []);
   return (
     <div className="bg-gray-50 h-screen flex flex-col">
       {/* Header at top */}
@@ -15,7 +32,7 @@ export default function MainLayout() {
       <div className="flex flex-1 overflow-hidden">
         {/* Left Sidebar */}
         <div className="w-1/4 bg-white border-r">
-          <SideNav />
+          <SideNav fetchedProfile={fetchedProfile}/>
         </div>
 
         {/* Center: Scrollable Post Section */}
