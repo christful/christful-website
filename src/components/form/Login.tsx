@@ -36,7 +36,7 @@ function Login() {
     try {
       console.log("Google Token Response:", tokenResponse);
       const res = await axios.post("https://christful-backend.vercel.app/google-auth", {
-        token: tokenResponse.access_token,
+        access_token: tokenResponse.access_token,
       });
       if (res.data?.token) localStorage.setItem("token", res.data.token);
       navigate("/home");
