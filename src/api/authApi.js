@@ -44,6 +44,7 @@ export const loginUser = async (formData, setError, setSuccess, setLoading, navi
  export const googleLogin = async () => {
     await useGoogleLogin({
       onSuccess: async (tokenResponse) => {
+        console.log("tokenREsponse", tokenResponse);
         try {
           const res = await axios.post(`${API_URL}/google-auth`, {
             access_token: tokenResponse.access_token,
